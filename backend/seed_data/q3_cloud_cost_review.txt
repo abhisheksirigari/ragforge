@@ -1,0 +1,19 @@
+Q3 Cloud Cost Review — Internal Notes
+
+Total monthly cloud spend for Q3 was $18,400, up 12% from Q2. The largest
+contributor to the increase was the reporting-batch-worker EC2 instance,
+which ran at an average utilization of 8% for the full month but was never
+scaled down or scheduled to stop outside business hours. This single
+instance accounted for roughly $410 of unnecessary spend.
+
+The second largest inefficiency was the orders-db-primary RDS instance,
+which was provisioned as a db.r5.2xlarge but rarely exceeded 20% CPU
+utilization. Downsizing to a db.r5.large with storage autoscaling enabled
+is estimated to save approximately $520 per month with no expected impact
+on application performance, since peak query load remains well within the
+smaller instance's headroom.
+
+Combined, terminating or scheduling the idle batch worker and downsizing
+the database instance would reduce monthly cloud spend by an estimated
+$930, or roughly $11,160 annually, without any architectural changes to
+the applications themselves.

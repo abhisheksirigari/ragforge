@@ -1,0 +1,25 @@
+RAGForge Platform Overview
+
+RAGForge is an agentic document intelligence platform. It ingests PDF, DOCX,
+TXT, and Markdown files, splits them into overlapping chunks, embeds each
+chunk locally using a sentence-transformers model, and stores the vectors in
+a persistent ChromaDB collection scoped to each user.
+
+When a user asks a question in RAG mode, the system retrieves the top-K most
+relevant chunks by cosine similarity and asks the configured LLM (Anthropic
+Claude or OpenAI) to answer using only that retrieved context, citing the
+source chunk for every claim.
+
+When a user asks a question in Agent mode, the LLM is given two tools:
+retrieve_documents, which searches the same vector index, and calculator,
+which evaluates arithmetic expressions. The agent decides which tools to
+call, in what order, and how many times, before producing a final answer.
+Every tool call is recorded in an execution trace so the reasoning is fully
+auditable in the UI.
+
+The platform also includes a lightweight evaluation harness: for any
+question, a user can supply expected keywords, and the system reports
+whether retrieval surfaced a passage containing them (a hit/miss judgement)
+along with a precision@k score and end-to-end latency. Running this
+repeatedly across a fixed test set is how a team would track retrieval
+quality over time as documents are added or chunking parameters change.

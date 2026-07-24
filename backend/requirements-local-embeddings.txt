@@ -1,0 +1,7 @@
+# Optional. Only needed if you set EMBEDDING_PROVIDER=local in .env.
+# Not installed by default because sentence-transformers pulls in PyTorch,
+# which can use 400-600MB+ of RAM once loaded — enough to crash free-tier
+# hosting (e.g. Render's 512MB limit). Fine on your own machine, where RAM
+# isn't capped the same way. Install with:
+#   pip install -r requirements-local-embeddings.txt
+sentence-transformers==3.0.1

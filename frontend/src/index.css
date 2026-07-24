@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-void text-ink-primary font-sans antialiased;
+  background-image:
+    linear-gradient(rgba(94, 234, 212, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(94, 234, 212, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+::selection {
+  background: rgba(94, 234, 212, 0.25);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #2A3441 transparent;
+}
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: #2A3441; border-radius: 4px; }
+
+/* Visible keyboard focus everywhere, no exceptions */
+:focus-visible {
+  outline: 2px solid #5EEAD4;
+  outline-offset: 2px;
+}
+
+@layer components {
+  .panel {
+    @apply bg-panel border border-schematic rounded-lg;
+  }
+
+  .panel-header {
+    @apply flex items-center justify-between px-5 py-4 border-b border-schematic;
+  }
+
+  .label-tag {
+    @apply font-mono text-[11px] uppercase tracking-widest text-ink-faint;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-cyan-glow text-void font-mono text-sm font-semibold px-4 py-2 transition-transform hover:-translate-y-px hover:shadow-[0_0_20px_rgba(94,234,212,0.35)] active:translate-y-0 disabled:opacity-40 disabled:pointer-events-none;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-schematic bg-panel2 text-ink-primary font-mono text-sm px-4 py-2 transition-colors hover:border-cyan-glow/50 hover:text-cyan-glow disabled:opacity-40 disabled:pointer-events-none;
+  }
+
+  .input-field {
+    @apply w-full rounded-md bg-void border border-schematic px-3 py-2.5 text-sm text-ink-primary placeholder:text-ink-faint focus:border-cyan-glow/60 transition-colors;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-md text-sm font-medium text-ink-muted transition-colors hover:bg-panel2 hover:text-ink-primary;
+  }
+
+  .nav-link-active {
+    @apply bg-panel2 text-cyan-glow;
+  }
+
+  .metric-figure {
+    @apply font-mono text-3xl font-semibold text-ink-primary tabular-nums;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-mono uppercase tracking-wide;
+  }
+  .badge-ready { @apply bg-cyan-glow/10 text-cyan-glow border border-cyan-glow/30; }
+  .badge-processing { @apply bg-amber-glow/10 text-amber-glow border border-amber-glow/30; }
+  .badge-failed { @apply bg-danger/10 text-danger border border-danger/30; }
+}
+
+@keyframes trace-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+.trace-active { animation: trace-pulse 1.4s ease-in-out infinite; }
+
+@keyframes flow-dash {
+  to { stroke-dashoffset: -24; }
+}
+.trace-line-flowing {
+  stroke-dasharray: 4 4;
+  animation: flow-dash 0.8s linear infinite;
+}
